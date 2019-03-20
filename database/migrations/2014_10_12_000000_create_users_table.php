@@ -16,7 +16,9 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('phone')->unique();
+            $table->string('email')->unique();
+            $table->string('phone');
+            $table->string('identity_card');
             $table->string('password');
             $table->date('birthday');
             $table->enum('gender', ['male', 'female']);
@@ -25,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('specialize');
             $table->boolean('labor_ability');
             $table->boolean('employment_status')->nullable();
-            $table->integer('income');
+            $table->integer('income')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

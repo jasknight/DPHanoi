@@ -29,12 +29,12 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
-                    <input type="phone" name="phone" class="form-control" value="{{ old('phone') }}"
-                           placeholder="{{ trans('adminlte::adminlte.phone') }}">
-                    <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
-                    @if ($errors->has('phone'))
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                           placeholder="{{ trans('adminlte::adminlte.email') }}">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('email'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('phone') }}</strong>
+                            <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
                 </div>

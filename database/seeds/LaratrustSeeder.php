@@ -47,9 +47,12 @@ class LaratrustSeeder extends Seeder
                     $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
                 }
             }
+
+            // Attach all permissions to the role
+            $role->permissions()->sync($permissions);
+
+            $this->command->info("Creating '{$key}' user");
         }
-
-
     }
 
     /**
