@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Disability;
+use App\UserDisability;
+use App\Need;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +25,16 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers {
+        showRegistrationForm as laravelShowRegistrationForm;
+    }
+
+    public function showRegistrationForm()
+    {
+        $disabilities = Disability::all();
+        $needs = Need::all();
+        return view('auth.register')->with(['disabilities' => $disabilities, 'needs' => $needs]);
+    }
 
     /**
      * Where to redirect users after registration.
@@ -60,7 +72,11 @@ class RegisterController extends Controller
             'address' => ['required', 'string'],
             'employment_status' => ['string'],
             'labor_ability' => ['required', 'boolean'],
-            'income' => ['integer']
+            'income' => ['integer'],
+            'academic_level' => ['required'],
+            'disability' => ['required', 'integer'],
+            'disability_detail' => ['required', 'string'],
+            'specialize' => ['required', 'string']
         ]);
     }
 
@@ -72,10 +88,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
+            'identity_card' => $data['identity_card'],
+            'birthday' => $data['birthday'],
+            'gender' => $data['gender'],
+            'address' => $data['address'],
+            'employment_status' => $data['employment_status'],
+            'labor_ability' => $data['labor_ability'],
+            'income' => $data['income'],
+            'academic_level' => $data['academic_level'],
+            'specialize' => $data['specialize'],
         ]);
+
+        UserDisability::create([
+            'user_id' => $user->id,
+            'disability_id' => $data['disability'],
+            'detail' => $data['disability_detail']
+        ]);
+
+        return $user;
     }
 }

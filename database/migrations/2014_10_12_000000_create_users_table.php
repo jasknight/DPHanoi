@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('academic_level');
             $table->string('specialize');
             $table->boolean('labor_ability');
-            $table->boolean('employment_status')->nullable();
+            $table->string('employment_status')->nullable();
             $table->integer('income')->default(0);
             $table->rememberToken();
             $table->timestamps();

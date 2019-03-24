@@ -25,7 +25,7 @@
 
     <!-- Stylesheet
         ================================================== -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/homepage.css">
     <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
     <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -54,8 +54,19 @@
                 <li><a href="#testimonials" class="page-scroll">Thông báo</a></li>
                 <li><a href="#services" class="page-scroll">Hoạt động</a></li>
                 <li><a href="#portfolio" class="page-scroll">Thư viện ảnh</a></li>
-                <li><a href="#contact" class="page-scroll">Liên hệ</a></li>
-                <li><a href={{ route('login') }} class="page-scroll">Đăng nhập</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+                @if (Auth::check())
+                    <li>
+                        <a href="" class="page-scroll">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" id="logout-btn" class="page-scroll">ĐĂNG XUẤT</button>
+                            </form>
+                        </a>
+                    </li>
+                @else
+                    <li><a href={{ route('login') }} class="page-scroll">Đăng nhập</a></li>
+                @endif
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -389,7 +400,6 @@
 <script type="text/javascript" src="js/jquery.isotope.js"></script>
 <script type="text/javascript" src="js/owl.carousel.js"></script>
 <script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
-<script type="text/javascript" src="js/contact_me.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@ class CreateUserDisabilityTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('disability_id');
-            $table->integer('detail');
+            $table->string('detail');
             $table->timestamps();
         });
     }

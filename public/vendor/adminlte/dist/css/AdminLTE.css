@@ -3240,11 +3240,29 @@ table.text-center th {
 .register-page {
   background: #d2d6de;
 }
-.login-box,
-.register-box {
+.login-box {
   width: 360px;
   margin: 7% auto;
 }
+
+.register-box {
+  width: 680px;
+  margin: 7% auto;
+}
+
+.register-box .register-form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-box .register-form-row .form-group{
+  flex-basis: 45%;
+}
+
+.register-box #address {
+    resize: none;
+}
+
 @media (max-width: 768px) {
   .login-box,
   .register-box {
@@ -3252,23 +3270,40 @@ table.text-center th {
     margin-top: 20px;
   }
 }
-.login-box-body,
-.register-box-body {
+.login-box-body {
   background: #fff;
   padding: 20px;
   border-top: 0;
   color: #666;
 }
+
+.register-box-body {
+  padding: 57px 65px;
+  padding-bottom: 65px;
+  background: #fff;
+  border-top: 0;
+  color: #666;
+}
+
 .login-box-body .form-control-feedback,
 .register-box-body .form-control-feedback {
   color: #777;
 }
-.login-box-msg,
-.register-box-msg {
+
+.login-box-msg {
   margin: 0;
   text-align: center;
   padding: 0 20px 20px 20px;
 }
+
+.register-box-msg {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+}
+
 .social-auth-links {
   margin: 10px 0;
 }

@@ -549,3 +549,12 @@ color: #777;
 #footer a:hover {
 	color: #ccc;
 }
+
+#logout-btn {
+    background: transparent;
+    border: none;
+}
+
+#logout-btn:focus {
+    outline: none;
+}
