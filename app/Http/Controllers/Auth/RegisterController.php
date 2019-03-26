@@ -6,11 +6,14 @@ use App\User;
 use App\Disability;
 use App\UserDisability;
 use App\Need;
+use App\Role;
+use App\UserNeed;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class RegisterController extends Controller
 {
@@ -76,7 +79,8 @@ class RegisterController extends Controller
             'academic_level' => ['required'],
             'disability' => ['required', 'integer'],
             'disability_detail' => ['required', 'string'],
-            'specialize' => ['required', 'string']
+            'specialize' => ['required', 'string'],
+            'need' => ['required']
         ]);
     }
 
@@ -102,13 +106,30 @@ class RegisterController extends Controller
             'income' => $data['income'],
             'academic_level' => $data['academic_level'],
             'specialize' => $data['specialize'],
+            'status' => User::NOT_APPROVED
         ]);
+
+        $userRole = Role::where('name', 'user')->first();
+        $user->attachRole($userRole);
 
         UserDisability::create([
             'user_id' => $user->id,
             'disability_id' => $data['disability'],
             'detail' => $data['disability_detail']
         ]);
+
+        $userNeed = $data['need'];
+        foreach($userNeed as $need) {
+            $dataUserNeed[] = [
+                'user_id' => $user->id,
+                'need_id' => $need,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            ];
+        }
+
+        UserNeed::insert($dataUserNeed);
+
 
         return $user;
     }

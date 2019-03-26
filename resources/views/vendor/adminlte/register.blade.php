@@ -14,12 +14,11 @@
         </div>
 
         <div class="register-box-body">
-            <p class="register-box-msg">{{ trans('adminlte::adminlte.register_message') }}</p>
-            <form action="{{ url(config('adminlte.register_url', 'register')) }}" method="post">
+            {!! Form::open(['url' => config('adminlte.register_url', 'register'), 'method' => 'post']) !!}
                 {!! csrf_field() !!}
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="name">Họ Tên</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                    {{ Form::label('name', 'Họ Tên') }}
+                    {{ Form::text('name', old('name'), ['class' => 'form-control', 'required']) }}
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -29,8 +28,8 @@
 
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                        <label for="password">Mật Khẩu</label>
-                        <input type="password" name="password" class="form-control" required>
+                        {{ Form::label('password', 'Mật Khẩu') }}
+                        {{ Form::password('password', ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('password'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('password') }}</strong>
@@ -39,8 +38,8 @@
                     </div>
 
                     <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                        <label for="password_confirmation">Nhập Lại Mật Khẩu</label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
+                        {{ Form::label('password_confirmation', 'Nhập Lại Mật Khẩu') }}
+                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -51,8 +50,8 @@
 
                 <div class="register-form-row">
                     <div class="form-group colhas-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                        <label for="email">Địa Chỉ Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                        {{ Form::label('email', 'Địa Chỉ Email') }}
+                        {{ Form::email('email', ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -60,6 +59,8 @@
                         @endif
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
+                        {{ Form::label('phone', 'Số điện thoại') }}
+                        {{ Form::text('phone', ['class' => 'form-control', 'required']) }}
                         <label for="phone">Số Điện Thoại</label>
                         <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
                         @if ($errors->has('phone'))
@@ -70,12 +71,12 @@
                     </div>
                 </div>
 
-
-
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('birthday') ? 'has-error' : '' }}">
+                        {{ Form::label('birthday', 'Ngày sinh') }}
+                        {{ Form::text('birthday', ['class' => 'form-control', 'id' => "birthday", 'required']) }}
                         <label for="birthday">Ngày Sinh</label>
-                        <input id="birthday" name="birthday" class="form-control" value="{{ old('birthday') }}" placeholder="{{ trans('adminlte::adminlte.birthday') }}" required>
+                        <input id="birthday" name="birthday" class="form-control" value="{{ old('birthday') }}" placeholder="{{ trans('adminlte::adminlte.birthday') }}" required autocomplete="off">
                         @if ($errors->has('birthday'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('birthday') }}</strong>
@@ -85,8 +86,8 @@
                     <div class="form-group has-feedback {{ $errors->has('gender') ? 'has-error' : '' }}">
                         <label for="gender">Giới Tính</label>
                         <div>
-                            <label class="radio-inline"><input type="radio" name="gender" required>Nam</label>
-                            <label class="radio-inline"><input type="radio" name="gender">Nữ</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="male" required>Nam</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="female">Nữ</label>
                         </div>
                         @if ($errors->has('gender'))
                             <span class="help-block">
@@ -95,7 +96,6 @@
                         @endif
                     </div>
                 </div>
-
 
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('identity_card') ? 'has-error' : '' }}">
@@ -110,8 +110,8 @@
                     <div class="form-group has-feedback {{ $errors->has('labor_ability') ? 'has-error' : '' }}">
                         <label for="labor_ability">Khả Năng Lao Động</label>
                         <div>
-                            <label class="radio-inline"><input type="radio" name="labor_ability" required>Còn</label>
-                            <label class="radio-inline"><input type="radio" name="labor_ability">Không còn</label>
+                            <label class="radio-inline"><input type="radio" name="labor_ability" value={{true}} required>Còn</label>
+                            <label class="radio-inline"><input type="radio" name="labor_ability" value={{{false}}}>Không còn</label>
                         </div>
                         @if ($errors->has('labor_ability'))
                             <span class="help-block">
@@ -123,7 +123,7 @@
 
                 <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
                     <label for="address">Địa Chỉ Thường Trú</label>
-                    <textarea class="form-control" rows="3" value="{{ old('address') }}" name="address" id="address" required></textarea>
+                    <textarea class="form-control" rows="3" name="address" id="address" required>{{ old('address') }}</textarea>
                     @if ($errors->has('address'))
                         <span class="help-block">
                             <strong>{{ $errors->first('address') }}</strong>
@@ -203,7 +203,13 @@
                     <label for="need">Nhu Cầu</label>
                     @foreach ($needs as $need)
                         <div class="checkbox">
-                        <label><input type="checkbox" value={{ $need->id }} name="need[]">{{ $need->detail }}</label>
+                            @if ($need->detail === 'Học nghề')
+                                <label><input type="checkbox" value={{ $need->id }} name="need[]">Học nghề (Ghi rõ nghề muốn học)</label>
+                                <br/>
+                                <input type="text" name="user-job-detail" id="user-job-detail">
+                            @else
+                                <label><input type="checkbox" value={{ $need->id }} name="need[]">{{ $need->detail }}</label>
+                            @endif
                         </div>
                     @endforeach
                     @if ($errors->has('need'))
@@ -216,7 +222,7 @@
                 <button type="submit"
                         class="btn btn-primary btn-block btn-flat"
                 >{{ trans('adminlte::adminlte.register') }}</button>
-            </form>
+            {!! Form::close() !!}
             <div class="auth-links">
                 <a href="{{ url(config('adminlte.login_url', 'login')) }}"
                    class="text-center">{{ trans('adminlte::adminlte.i_already_have_a_membership') }}</a>

@@ -3260,7 +3260,12 @@ table.text-center th {
 }
 
 .register-box #address {
-    resize: none;
+  resize: none;
+}
+
+.register-box #user-job-detail {
+  margin: 10px 0 10px 20px;
+  width: 200px;
 }
 
 @media (max-width: 768px) {

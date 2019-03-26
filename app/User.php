@@ -12,13 +12,15 @@ class User extends Authenticatable
     use LaratrustUserTrait;
     use Notifiable;
 
+    const APPROVED = 1;
+    const NOT_APPROVED = 1;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'identity_card', 'birthday', 'gender', 'address', 'academic_level', 'specialize', 'labor_ability', 'employment_status', 'income'
+        'name', 'email', 'password', 'phone', 'identity_card', 'birthday', 'gender', 'address', 'academic_level', 'specialize', 'labor_ability', 'employment_status', 'income', 'status'
     ];
 
     /**

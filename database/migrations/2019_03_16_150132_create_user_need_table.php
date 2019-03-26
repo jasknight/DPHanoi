@@ -17,6 +17,7 @@ class CreateUserNeedTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('need_id');
+            $table->string('detail')->nullable();
             $table->timestamps();
         });
     }
