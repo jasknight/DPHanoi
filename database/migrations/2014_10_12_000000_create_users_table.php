@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->date('birthday');
             $table->enum('gender', ['male', 'female']);
             $table->string('address');
+            $table->integer('district_id');
+            $table->integer('subdistrict_id');
             $table->string('academic_level');
             $table->string('specialize');
             $table->boolean('labor_ability');

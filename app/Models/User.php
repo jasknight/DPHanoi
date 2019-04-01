@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,15 +12,18 @@ class User extends Authenticatable
     use LaratrustUserTrait;
     use Notifiable;
 
+    const NOT_APPROVED = 0;
     const APPROVED = 1;
-    const NOT_APPROVED = 1;
+
+    const MALE = 'male';
+    const FEMALE = 'female';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'identity_card', 'birthday', 'gender', 'address', 'academic_level', 'specialize', 'labor_ability', 'employment_status', 'income', 'status'
+        'name', 'email', 'password', 'phone', 'identity_card', 'birthday', 'gender', 'address', 'academic_level', 'specialize', 'labor_ability', 'employment_status', 'income', 'status', 'district_id', 'subdistrict_id'
     ];
 
     /**
@@ -40,4 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getGenderAttribute($value)
+    {
+        if ($value === USER::MALE) {
+            return 'Male';
+        } else {
+            return 'Female';
+        }
+    }
 }

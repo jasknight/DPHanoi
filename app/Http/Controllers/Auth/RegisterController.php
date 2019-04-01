@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\Disability;
-use App\UserDisability;
-use App\Need;
-use App\Role;
-use App\UserNeed;
+use App\Models\User;
+use App\Models\Disability;
+use App\Models\UserDisability;
+use App\Models\Need;
+use App\Models\Role;
+use App\Models\UserNeed;
+use App\Models\District;
+use App\Models\Subdistrict;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
 use Laratrust\Traits\LaratrustUserTrait;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -30,13 +34,32 @@ class RegisterController extends Controller
 
     use RegistersUsers {
         showRegistrationForm as laravelShowRegistrationForm;
+        register as laravelRegister;
     }
 
     public function showRegistrationForm()
     {
-        $disabilities = Disability::all();
+        $disabilities = Disability::all()->pluck('description', 'id');
         $needs = Need::all();
-        return view('auth.register')->with(['disabilities' => $disabilities, 'needs' => $needs]);
+        $districts = District::all();
+        $subdistricts = Subdistrict::all();
+        return view('auth.register')->with([
+            'disabilities' => $disabilities,
+            'needs' => $needs,
+            'districts' => $districts,
+            'subdistricts' => $subdistricts
+        ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect()->route('verify');
     }
 
     /**
@@ -80,7 +103,9 @@ class RegisterController extends Controller
             'disability' => ['required', 'integer'],
             'disability_detail' => ['required', 'string'],
             'specialize' => ['required', 'string'],
-            'need' => ['required']
+            'need' => ['required'],
+            'district_id' => ['required', 'integer'],
+            'subdistrict_id' => ['required', 'integer']
         ]);
     }
 
@@ -106,6 +131,9 @@ class RegisterController extends Controller
             'income' => $data['income'],
             'academic_level' => $data['academic_level'],
             'specialize' => $data['specialize'],
+            'status' => User::NOT_APPROVED,
+            'district_id' => $data['district_id'],
+            'subdistrict_id' => $data['subdistrict_id'],
             'status' => User::NOT_APPROVED
         ]);
 
@@ -129,8 +157,6 @@ class RegisterController extends Controller
         }
 
         UserNeed::insert($dataUserNeed);
-
-
         return $user;
     }
 }

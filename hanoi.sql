@@ -13,16 +13,16 @@
 
 -- Dumping structure for table hanoi.districts
 CREATE TABLE IF NOT EXISTS `districts` (
-  `maqh` varchar(5) CHARACTER SET utf8 NOT NULL,
+  `id` varchar(5) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `type` varchar(30) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`maqh`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table hanoi.districts: ~30 rows (approximately)
 DELETE FROM `districts`;
 /*!40000 ALTER TABLE `districts` DISABLE KEYS */;
-INSERT INTO `districts` (`maqh`, `name`, `type`) VALUES
+INSERT INTO `districts` (`id`, `name`, `type`) VALUES
 	('001', 'Quận Ba Đình', 'Quận'),
 	('002', 'Quận Hoàn Kiếm', 'Quận'),
 	('003', 'Quận Tây Hồ', 'Quận'),
@@ -57,17 +57,17 @@ INSERT INTO `districts` (`maqh`, `name`, `type`) VALUES
 
 -- Dumping structure for table hanoi.subdistricts
 CREATE TABLE IF NOT EXISTS `subdistricts` (
-  `xaid` varchar(5) CHARACTER SET utf8 NOT NULL,
+  `id` varchar(5) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `type` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `maqh` varchar(5) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`xaid`)
+  `district_id` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table hanoi.subdistricts: ~584 rows (approximately)
 DELETE FROM `subdistricts`;
 /*!40000 ALTER TABLE `subdistricts` DISABLE KEYS */;
-INSERT INTO `subdistricts` (`xaid`, `name`, `type`, `maqh`) VALUES
+INSERT INTO `subdistricts` (`id`, `name`, `type`, `district_id`) VALUES
 	('00001', 'Phường Phúc Xá', 'Phường', '001'),
 	('00004', 'Phường Trúc Bạch', 'Phường', '001'),
 	('00006', 'Phường Vĩnh Phúc', 'Phường', '001'),

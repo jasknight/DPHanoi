@@ -18,7 +18,7 @@
                 {!! csrf_field() !!}
                 <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
                     {{ Form::label('name', 'Họ Tên') }}
-                    {{ Form::text('name', old('name'), ['class' => 'form-control', 'required']) }}
+                    {{ Form::text('name', old('name'), ['class' => 'form-control', 'id' => 'name', 'required']) }}
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -29,7 +29,7 @@
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
                         {{ Form::label('password', 'Mật Khẩu') }}
-                        {{ Form::password('password', ['class' => 'form-control', 'required']) }}
+                        {{ Form::password('password', ['class' => 'form-control', 'id' => 'password', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('password'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('password') }}</strong>
@@ -39,7 +39,7 @@
 
                     <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                         {{ Form::label('password_confirmation', 'Nhập Lại Mật Khẩu') }}
-                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
+                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -49,9 +49,9 @@
                 </div>
 
                 <div class="register-form-row">
-                    <div class="form-group colhas-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+                    <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
                         {{ Form::label('email', 'Địa Chỉ Email') }}
-                        {{ Form::email('email', ['class' => 'form-control', 'required']) }}
+                        {{ Form::email('email', old('email'), ['class' => 'form-control', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -60,9 +60,7 @@
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
                         {{ Form::label('phone', 'Số điện thoại') }}
-                        {{ Form::text('phone', ['class' => 'form-control', 'required']) }}
-                        <label for="phone">Số Điện Thoại</label>
-                        <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
+                        {{ Form::text('phone', old('phone'), ['class' => 'form-control', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('phone'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('phone') }}</strong>
@@ -74,9 +72,7 @@
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('birthday') ? 'has-error' : '' }}">
                         {{ Form::label('birthday', 'Ngày sinh') }}
-                        {{ Form::text('birthday', ['class' => 'form-control', 'id' => "birthday", 'required']) }}
-                        <label for="birthday">Ngày Sinh</label>
-                        <input id="birthday" name="birthday" class="form-control" value="{{ old('birthday') }}" placeholder="{{ trans('adminlte::adminlte.birthday') }}" required autocomplete="off">
+                        {{ Form::text('birthday', old('birthday'), ['class' => 'form-control', 'id' => 'birthday', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('birthday'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('birthday') }}</strong>
@@ -84,10 +80,10 @@
                         @endif
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('gender') ? 'has-error' : '' }}">
-                        <label for="gender">Giới Tính</label>
+                        {{ Form::label('gender', 'Giới tính') }}
                         <div>
-                            <label class="radio-inline"><input type="radio" name="gender" value="male" required>Nam</label>
-                            <label class="radio-inline"><input type="radio" name="gender" value="female">Nữ</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="male" @if(old('gender')) checked @endif required>Nam</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="female" @if(old('gender')) checked @endif>Nữ</label>
                         </div>
                         @if ($errors->has('gender'))
                             <span class="help-block">
@@ -99,19 +95,19 @@
 
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('identity_card') ? 'has-error' : '' }}">
-                        <label for="phone">Số Chứng Minh Thư</label>
-                        <input type="input" id="identity_card" name="identity_card" class="form-control" value="{{ old('identity_card') }}" required>
+                        {{ Form::label('identity_card', 'Số chứng minh thư') }}
+                        {{ Form::text('identity_card', old('identity_card'), ['class' => 'form-control', 'required', 'autocomplete' => 'off']) }}
                         @if ($errors->has('identity_card'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('identity_card') }}</strong>
+                        <span class="help-block">
+                            <strong>{{ $errors->first('identity_card') }}</strong>
                             </span>
                         @endif
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('labor_ability') ? 'has-error' : '' }}">
-                        <label for="labor_ability">Khả Năng Lao Động</label>
+                            {{ Form::label('labor_ability', 'Khả năng lao động') }}
                         <div>
-                            <label class="radio-inline"><input type="radio" name="labor_ability" value={{true}} required>Còn</label>
-                            <label class="radio-inline"><input type="radio" name="labor_ability" value={{{false}}}>Không còn</label>
+                            <label class="radio-inline"><input type="radio" name="labor_ability" @if(old('labor_ability')) checked @endif value="1" required>Còn</label>
+                            <label class="radio-inline"><input type="radio" name="labor_ability" @if(old('labor_ability')) checked @endif value="0">Không còn</label>
                         </div>
                         @if ($errors->has('labor_ability'))
                             <span class="help-block">
@@ -121,9 +117,40 @@
                     </div>
                 </div>
 
+                <div class="register-form-row">
+                    <div class="form-group has-feedback {{ $errors->has('district_id') ? 'has-error' : '' }}">
+                        {{ Form::label('district_id', 'Quận/Huyện') }}
+                        <select class="form-control search-select" name="district_id" data-value={{ old('district_id')}} id="district-select" required>
+                            <option>
+                            @foreach ($districts as $district)
+                                <option value={{ $district->id }}>{{ $district->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('district_id'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('district_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group has-feedback {{ $errors->has('subdistrict_id') ? 'has-error' : '' }}">
+                        {{ Form::label('subdistrict_id', 'Phường/Xã/Thị Trấn') }}
+                        <select class="form-control search-select" name="subdistrict_id" data-value={{ old('subdistrict_id')}} id="subdistrict-select" required>
+                            <option>
+                            @foreach ($subdistricts as $subdistrict)
+                                <option value={{ $subdistrict->id }} data-type={{ $subdistrict->district_id }}>{{ $subdistrict->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('subdistrict_id'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('subdistrict_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="form-group has-feedback {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <label for="address">Địa Chỉ Thường Trú</label>
-                    <textarea class="form-control" rows="3" name="address" id="address" required>{{ old('address') }}</textarea>
+                    {{ Form::label('address', 'Địa Chỉ Thường Trú') }}
+                    {{ Form::textarea('address', old('address'), ['class' => 'form-control', 'id' => 'address', 'rows' => '3', 'required']) }}
                     @if ($errors->has('address'))
                         <span class="help-block">
                             <strong>{{ $errors->first('address') }}</strong>
@@ -133,8 +160,8 @@
 
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('academic_level') ? 'has-error' : '' }}">
-                        <label for="address">Trình Độ Học Vấn</label>
-                        <input type="input" id="academic_level" name="academic_level" class="form-control" value="{{ old('academic_level') }}" required>
+                        {{ Form::label('academic_level', 'Trình Độ Học Vấn') }}
+                        {{ Form::text('academic_level', old('academic_level'), ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('academic_level'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('academic_level') }}</strong>
@@ -142,8 +169,8 @@
                         @endif
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('specialize') ? 'has-error' : '' }}">
-                        <label for="specialize">Chuyên Môn</label>
-                        <input type="input" id="specialize" name="specialize" class="form-control" value="{{ old('specialize') }}" required>
+                        {{ Form::label('specialize', 'Chuyên Môn') }}
+                        {{ Form::text('specialize', old('specialize'), ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('specialize'))
                         <span class="help-block">
                             <strong>{{ $errors->first('specialize') }}</strong>
@@ -154,8 +181,8 @@
 
                 <div class="register-form-row">
                     <div class="form-group has-feedback {{ $errors->has('employment_status') ? 'has-error' : '' }}">
-                        <label for="employment_status">Công Việc Đang Làm (Nếu Có)</label>
-                        <input type="input" id="employment_status" name="employment_status" class="form-control" value="{{ old('employment_status') }}" required>
+                        {{ Form::label('employment_status', 'Công Việc Đang Làm (Nếu Có)') }}
+                        {{ Form::text('employment_status', old('employment_status'), ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('employment_status'))
                         <span class="help-block">
                             <strong>{{ $errors->first('employment_status') }}</strong>
@@ -164,8 +191,8 @@
                     </div>
 
                     <div class="form-group has-feedback {{ $errors->has('income') ? 'has-error' : '' }}">
-                        <label for="income">Thu Nhập Cá Nhân</label>
-                        <input type="text" id="income" name="income" class="form-control" value="{{ old('income') }}" required>
+                        {{ Form::label('income', 'Thu Nhập Cá Nhân') }}
+                        {{ Form::text('income', old('income'), ['class' => 'form-control', 'required']) }}
                         @if ($errors->has('income'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('income') }}</strong>
@@ -175,13 +202,8 @@
                 </div>
 
                 <div class="form-group has-feedback {{ $errors->has('disability') ? 'has-error' : '' }}">
-                    <label for="disability">Hình thức khuyết tật</label>
-                    <select class="form-control" name='disability' required>
-                        <option value="" disabled selected>Chọn 1 trong số những lựa chọn sau</option>
-                        @foreach ($disabilities as $disability)
-                        <option value={{$disability->id}}>{{ $disability->description }}</option>
-                        @endforeach
-                    </select>
+                    {{ Form::label('disability', 'Hình thức khuyết tật') }}
+                    {{ Form::select('disability', $disabilities, old('disability'), ['class' => 'form-control', 'required', 'placeholder' => 'Chọn 1 trong số những lựa chọn sau']) }}
                     @if ($errors->has('disability'))
                     <span class="help-block">
                         <strong>{{ $errors->first('disability') }}</strong>
@@ -190,8 +212,8 @@
                 </div>
 
                 <div class="form-group has-feedback {{ $errors->has('disability_detail') ? 'has-error' : '' }}">
-                    <label for="disability_detail">Chi Tiết Tình Trạng Khuyết Tật</label>
-                    <input id="disability_detail" name="disability_detail" class="form-control" value="{{ old('disability_detail') }}" required>
+                    {{ Form::label('disability_detail', 'Chi tiết tình trạng khuyết tật') }}
+                    {{ Form::text('disability_detail', old('disability_detail'), ['class' => 'form-control', 'required']) }}
                     @if ($errors->has('disability_detail'))
                         <span class="help-block">
                             <strong>{{ $errors->first('disability_detail') }}</strong>
@@ -200,15 +222,21 @@
                 </div>
 
                 <div class="form-group has-feedback {{ $errors->has('need') ? 'has-error' : '' }}">
-                    <label for="need">Nhu Cầu</label>
+                    {{ Form::label('need', 'Nhu Cầu') }}
                     @foreach ($needs as $need)
                         <div class="checkbox">
                             @if ($need->detail === 'Học nghề')
-                                <label><input type="checkbox" value={{ $need->id }} name="need[]">Học nghề (Ghi rõ nghề muốn học)</label>
+                                <label>
+                                    {{ Form::checkbox('need[]', $need->id) }}
+                                    Học nghề (Ghi rõ nghề muốn học)
+                                </label>
                                 <br/>
                                 <input type="text" name="user-job-detail" id="user-job-detail">
                             @else
-                                <label><input type="checkbox" value={{ $need->id }} name="need[]">{{ $need->detail }}</label>
+                                <label>
+                                    {{ Form::checkbox('need[]', $need->id) }}
+                                    {{ $need->detail }}
+                                </label>
                             @endif
                         </div>
                     @endforeach
@@ -228,17 +256,47 @@
                    class="text-center">{{ trans('adminlte::adminlte.i_already_have_a_membership') }}</a>
             </div>
         </div>
-        <!-- /.form-box -->
-    </div><!-- /.register-box -->
+    </div>
 @stop
 
 @section('adminlte_js')
     <script>
         $( function() {
-            $( "#birthday" ).datepicker(
+            $("#birthday").datepicker(
                 { dateFormat: 'yy-mm-dd' }
             );
-        } );
+
+            $('.search-select').select2({
+                placeholder: 'Chọn 1 trong số lựa chọn sau',
+                allowClear: true
+            });
+
+            var districtValue = $('#district-select').data('value');
+            if (typeof districtValue !== undefined) {
+                $('#district-select').val(districtValue);
+            }
+        });
+
+        function fillData() {
+            $('#name').val('Do Quang Huy');
+            $('#password').val('123456789');
+            $('#password_confirmation').val('123456789');
+            $('#email').val('huydq2510@gmail.com');
+            $('#phone').val('0368636007');
+            $('#birthday').val('1996-10-25');
+            $('input:radio[name="gender"]').filter('[value="male"]').attr('checked', true);
+            $('input:radio[name="labor_ability"]').filter('[value="1"]').attr('checked', true);
+            $('#identity_card').val('0123456789');
+            $('#district-select').val('2');
+            $('#subdistrict-select').val('37');
+            $('#address').val('Số 14, ngõ 463 đường Hồng Hà, Hoàn Kiếm, Hà Nội');
+            $('#academic_level').val('10/10');
+            $('#specialize').val('CNTT');
+            $('#employment_status').val('Làm văn phòng');
+            $('#income').val('9500000');
+            $('#disability').val('5');
+            $('#disability_detail').val('Bình thường');
+        };
     </script>
     @yield('js')
 @stop
