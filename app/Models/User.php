@@ -44,12 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getGenderAttribute($value)
+    public function district()
     {
-        if ($value === USER::MALE) {
-            return 'Male';
-        } else {
-            return 'Female';
-        }
+        return $this->belongsTo('App\Models\District', 'district_id');
+    }
+
+    public function subdistrict()
+    {
+        return $this->belongsTo('App\Models\Subdistrict', 'subdistrict_id');
     }
 }

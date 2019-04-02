@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'gender', 'status')->get();
+        $users = User::with(['district', 'subdistrict'])->get();
         return view('admin.user.list')->with([
             'users' => json_encode($users)
         ]);

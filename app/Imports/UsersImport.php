@@ -25,9 +25,22 @@ class UsersImport implements OnEachRow
             'phone' => (string)intval($row[9]),
             'labor_ability' => $row[10] === null ? 0 : 1,
             'employment_status' => $row[12],
-            'income' => $row[14] === null ? null : ($row[14] === 'không có') ? 0 : str_replace($row[14], '', " vnđ")
+            'income' => $this->getIncome($row[14])
         ];
 
         dd($user);
+    }
+
+    private function getIncome($data)
+    {
+        if ($data === null) {
+            return null;
+        } elseif ($data === 'không có') {
+            return 0;
+        } else {
+            $data = str_replace('.', '',$data);
+            $data = str_replace(' vnđ', '', $data);
+            return intval($data);
+        }
     }
 }
