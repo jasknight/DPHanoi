@@ -15,17 +15,18 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
     Route::post('/admin/login', 'Admin\Auth\LoginController@login');
-    Route::get('/verify', 'Auth\CustomVerificationController@show')->name('verify');
+    Route::get('/verify', 'Auth\CustomVerificationController@show')->name('verify')->middleware('role:user');
     Route::get('/', function () {
         return view('home');
     })->name('homepage');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'role:superadministrator|district_administrator|subdistrict_administrator']], function () {
     Route::get('/users', 'Admin\UserController@index')->name('admin.user.index');
 
     Route::get('/users/import', 'Admin\UserController@showUserImport')->name('admin.users.showUserImport');
     Route::post('/users/import', 'Admin\UserController@importUser')->name('admin.users.importUser');
+    Route::get('/users/{id?}', 'Admin\UserController@show')->name('admin.users.show');
 
     Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
     Route::get('/admins/create', 'Admin\AdminController@create')->name('admin.admins.create');

@@ -10,11 +10,6 @@ use App\Models\User;
 class CustomVerificationController extends Controller
 {
     public function show() {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        $user = Auth::user();
         if ($user->status === User::APPROVED) {
             return redirect()->route('homepage');
         } else {

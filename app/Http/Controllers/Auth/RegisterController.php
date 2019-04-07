@@ -151,12 +151,24 @@ class RegisterController extends Controller
             $dataUserNeed[] = [
                 'user_id' => $user->id,
                 'need_id' => $need,
+                'detail' => $this->getNeedDetail($need, $data),
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             ];
         }
-
         UserNeed::insert($dataUserNeed);
         return $user;
+    }
+
+    protected function getNeedDetail($need, $data) {
+        switch ($need) {
+            case Need::HOC_NGHE:
+                return $data['user-job-detail'];
+                break;
+            
+            default:
+                return null;
+                break;
+        }
     }
 }

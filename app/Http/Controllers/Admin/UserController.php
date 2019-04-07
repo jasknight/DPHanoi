@@ -27,4 +27,10 @@ class UserController extends Controller
     {
         Excel::import(new UsersImport, request()->file('user_file'));
     }
+
+    public function show(Request $request)
+    {
+        $user = auth()->user();
+        return view('admin.user.show')->with(['user' => $user]);
+    }
 }
