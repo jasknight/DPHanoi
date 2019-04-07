@@ -12,7 +12,6 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-
     Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
     Route::post('/admin/login', 'Admin\Auth\LoginController@login');
     Route::get('/verify', 'Auth\CustomVerificationController@show')->name('verify')->middleware('role:user');
