@@ -105,6 +105,7 @@ return [
     */
     'user_models' => [
         'users' => 'App\Models\User',
+        'admins' => 'App\Models\Admin',
     ],
 
     /*

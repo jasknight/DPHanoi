@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['url' => route('admin.user.importUser'), 'method' => 'post', 'files' => true]) !!}
+    {!! Form::open(['url' => route('admin.users.importUser'), 'method' => 'post', 'files' => true]) !!}
         <div class="form-group">
             {!! Form::file('user_file', ['accept'=> '.csv , .xlsx , .xssb']) !!}
         </div>

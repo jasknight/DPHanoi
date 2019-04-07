@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Danh sách người khuyết tật</h1>
+    <h1>Danh sách quản trị viên</h1>
 @stop
 
 @section('content')

@@ -95,6 +95,8 @@ return [
 
     'register_url' => 'register',
 
+    'admin_login_url' => 'admin/login',
+
     /*
     |--------------------------------------------------------------------------
     | Menu Items
@@ -110,12 +112,25 @@ return [
     'menu' => [
         'Người dùng',
         [
-            'text' => 'Profile',
+            'text' => 'Danh sách người dùng',
             'url'  => 'admin/users',
+            'active' => ['admin/users']
         ],
         [
             'text' => 'Import người dùng',
             'url'  => 'admin/users/import',
+            'active' => ['admin/users/import']
+        ],
+        'Admin',
+        [
+            'text' => 'Danh sách quản trị viên',
+            'url'  => 'admin/admins',
+            'active' => ['admin/admins']
+        ],
+        [
+            'text' => 'Thêm người quản trị',
+            'url'  => 'admin/admins/create',
+            'active' => ['admin/admins/create']
         ]
     ],
 
