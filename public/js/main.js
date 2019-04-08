@@ -4,7 +4,7 @@ function main() {
 (function () {
    'use strict';
    
-  	$('a.page-scroll').click(function() {
+    $('a.page-scroll').click(function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
           var target = $(this.hash);
           target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -17,7 +17,7 @@ function main() {
         }
       });
 
-	
+    
     // Show Menu on Book
     $(window).bind('scroll', function() {
         var navHeight = $(window).height() - 500;
@@ -33,7 +33,7 @@ function main() {
         offset: 80
     });
 
-	// Hide nav on click
+    // Hide nav on click
   $(".navbar-nav li a").click(function (event) {
     // check if window is small enough so dropdown is created
     var toggle = $(".navbar-toggle").is(":visible");
@@ -41,9 +41,9 @@ function main() {
       $(".navbar-collapse").collapse('hide');
     }
   });
-	
-  	// Portfolio isotope filter
-    $(window).load(function() {
+    
+    // Portfolio isotope filter
+    $(window).on('load', function() {
         var $container = $('.portfolio-items');
         $container.isotope({
             filter: '*',
@@ -69,23 +69,23 @@ function main() {
         });
 
     });
-	
+    
     // Nivo Lightbox 
     $('.portfolio-item a').nivoLightbox({
-            effect: 'slideDown',  
-            keyboardNav: true,                            
-        });
-		
-	// Testimonial Slider
-	  	$(document).ready(function() {
-	      $("#testimonial").owlCarousel({
+        effect: 'slideDown',  
+        keyboardNav: true,                            
+    });
+        
+    // Testimonial Slider
+    $(document).ready(function() {
+      $("#testimonial").owlCarousel({
         navigation : false, // Show next and prev buttons
         slideSpeed : 300,
         paginationSpeed : 400,
         singleItem:true
         });
 
-  	});	
+    }); 
 
 }());
 
