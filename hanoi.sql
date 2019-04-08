@@ -11,16 +11,17 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+-- Dumping data for table dphanoi.districts: ~30 rows (approximately)
+DELETE FROM districts;
+
 -- Dumping structure for table dphanoi.districts
-CREATE TABLE IF NOT EXISTS `districts` (
-  `id` int(10) unsigned NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `type` varchar(30) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS districts (
+  id integer unsigned NOT NULL,
+  name varchar(100) CHARACTER SET utf8 NOT NULL,
+  type varchar(30) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table dphanoi.districts: ~30 rows (approximately)
-DELETE FROM `districts`;
 /*!40000 ALTER TABLE `districts` DISABLE KEYS */;
 INSERT INTO `districts` (`id`, `name`, `type`) VALUES
 	(1, 'Quận Ba Đình', 'Quận'),

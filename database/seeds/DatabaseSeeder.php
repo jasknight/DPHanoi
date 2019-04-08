@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DisabilitiesTableSeeder::class);
         $this->call(NeedsTableSeeder::class);
         $this->call(DistrictsTableSeeder::class);
+        $this->call(SubdistrictTableSeeder::class);
     }
 }
