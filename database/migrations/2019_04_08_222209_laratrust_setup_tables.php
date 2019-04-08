@@ -11,6 +11,12 @@ class LaratrustSetupTables extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('permission_user');
+        Schema::dropIfExists('permission_role');
+        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('roles');
+
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
