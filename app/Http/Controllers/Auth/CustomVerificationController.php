@@ -10,6 +10,7 @@ use App\Models\User;
 class CustomVerificationController extends Controller
 {
     public function show() {
+        $user = Auth::guard('web')->user();
         if ($user->status === User::APPROVED) {
             return redirect()->route('homepage');
         } else {

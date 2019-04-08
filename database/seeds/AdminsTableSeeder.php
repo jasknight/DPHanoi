@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
+use App\Models\Role;
 
 class AdminsTableSeeder extends Seeder
 {
@@ -27,5 +29,9 @@ class AdminsTableSeeder extends Seeder
                 'updated_at' => now()
             ]
         ]);
+
+        $admin = Admin::find(1);
+        $adminRole = Role::where('name', 'superadministrator')->first();
+        $admin->attachRole($adminRole);
     }
 }

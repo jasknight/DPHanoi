@@ -7,11 +7,13 @@ use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
+        dd($user = Auth::guard('admin')->user()->roles()->first());
         $users = User::with(['district', 'subdistrict'])->get();
         return view('admin.user.list')->with([
             'users' => json_encode($users)

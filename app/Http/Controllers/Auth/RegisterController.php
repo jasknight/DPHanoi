@@ -18,6 +18,7 @@ use Illuminate\Validation\Rule;
 use Laratrust\Traits\LaratrustUserTrait;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -35,6 +36,11 @@ class RegisterController extends Controller
     use RegistersUsers {
         showRegistrationForm as laravelShowRegistrationForm;
         register as laravelRegister;
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('web');
     }
 
     public function showRegistrationForm()
@@ -165,7 +171,7 @@ class RegisterController extends Controller
             case Need::HOC_NGHE:
                 return $data['user-job-detail'];
                 break;
-            
+
             default:
                 return null;
                 break;

@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'role:superadministrator|district_administrator|subdistrict_administrator']], function () {
-    Route::get('/users', 'Admin\UserController@index')->name('admin.user.index');
+    Route::get('/users', 'Admin\UserController@index')->name('admin.users.index');
 
     Route::get('/users/import', 'Admin\UserController@showUserImport')->name('admin.users.showUserImport');
     Route::post('/users/import', 'Admin\UserController@importUser')->name('admin.users.importUser');
