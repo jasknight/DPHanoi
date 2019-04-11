@@ -615,3 +615,12 @@ color: #777;
 #footer a:hover {
 	color: #ccc;
 }
+
+#logout-btn {
+    border: none;
+    background: transparent;
+}
+
+#logout-btn:focus {
+    outline: none;
+}

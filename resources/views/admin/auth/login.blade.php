@@ -11,11 +11,11 @@
 @section('body')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">Quản trị DP Hà Nội</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}"><b>Quản trị DP Hà Nội</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">{{ trans('adminlte::adminlte.admin_login_message') }}</p>
+            <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
             <form action="{{ url(config('adminlte.admin_login_url', 'login')) }}" method="post">
                 {!! csrf_field() !!}
 

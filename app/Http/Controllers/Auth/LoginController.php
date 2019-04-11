@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -21,6 +23,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers {
         login as laravelLogin;
+        loggedOut as laravelLoggedOut;
     }
 
     /**
@@ -47,13 +50,16 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        $user = auth()->user();
-        if ($user->hasRole(['superadministrator', 'district_administrator', 'subdistrict_administrator'])) {
-            return route('admin.user.index');
-        } else if ($user->hasRole(['user']) && $user->status === USER::NOT_APPROVED) {
+        $user = Auth::guard('web')->user();
+        if ($user->status === User::NOT_APPROVED) {
             return '/verify';
         } else {
             return '/home';
         }
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        return redirect()->route('login');
     }
 }

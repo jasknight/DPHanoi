@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -21,6 +22,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers {
         showLoginForm as laravelShowLoginForm;
+        loggedOut as laravelLoggedOut;
     }
 
     /**
@@ -45,8 +47,16 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm()
+    // public function showLoginForm()
+    // {
+    //     // if (Auth::guard('admin')->check()) {
+    //     //     return redirect()->route('admin.users.index');
+    //     // }
+    //     // // return view('admin.auth.login');
+    // }
+
+    protected function loggedOut(Request $request)
     {
-        return view('admin.auth.login');
+        return redirect()->route('admin.login');
     }
 }

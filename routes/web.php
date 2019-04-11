@@ -12,13 +12,16 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login')->middleware('admin.guest');
-    Route::post('/admin/login', 'Admin\Auth\LoginController@login');
     Route::get('/verify', 'Auth\CustomVerificationController@show')->name('verify')->middleware('role:user');
     Route::get('/', function () {
         return view('home');
     })->name('homepage');
+
 });
+
+Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
+Route::post('/admin/login', 'Admin\Auth\LoginController@login');
+Route::post('/admin/logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function () {
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.index');

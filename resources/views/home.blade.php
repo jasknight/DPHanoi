@@ -41,26 +41,37 @@
 <!-- Navigation
     ==========================================-->
 <nav id="menu" class="navbar navbar-default navbar-fixed-top">
-  <div class="container"> 
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <img src="img/logo3.png" width = "108" height="60" >
     </div>
-    
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#about" class="page-scroll">Giới thiệu</a></li>
         <li><a href="#guide" class="page-scroll">Hướng dẫn sử dụng</a></li>
         <li><a href="#testimonials" class="page-scroll">Thông báo</a></li>
-        <li><a href="#services" class="page-scroll">Hoạt động</a></li>  
+        <li><a href="#services" class="page-scroll">Hoạt động</a></li>
         <li><a href="#contact" class="page-scroll">Liên hệ</a></li>
-        <li><a href={{ route('login') }} class="page-scroll">Đăng nhập</a></li>
+        @if(Auth::guard('web')->check())
+            <li>
+                <a href="" class="page-scroll">
+                    <form action={{ route('logout') }} method="POST">
+                        @csrf
+                        <input type="submit" value="ĐĂNG XUẤT" id="logout-btn">
+                    </form>
+                </a>
+            </li>
+        @else
+            <li><a href={{ route('login') }} class="page-scroll">Đăng nhập</a></li>
+        @endif
       </ul>
     </div>
-    <!-- /.navbar-collapse --> 
+    <!-- /.navbar-collapse -->
   </div>
-  <!-- /.container-fluid --> 
+  <!-- /.container-fluid -->
 </nav>
 <!-- Header -->
 <header id="header">
@@ -424,14 +435,13 @@
   </div>
 </div>
 
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script> 
-<script type="text/javascript" src="js/bootstrap.js"></script> 
-<script type="text/javascript" src="js/SmoothScroll.js"></script> 
-<script type="text/javascript" src="js/nivo-lightbox.js"></script> 
-<script type="text/javascript" src="js/jquery.isotope.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.js"></script> 
-<script type="text/javascript" src="js/jqBootstrapValidation.js"></script> 
-<script type="text/javascript" src="js/contact_me.js"></script> 
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/SmoothScroll.js"></script>
+<script type="text/javascript" src="js/nivo-lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/owl.carousel.js"></script>
+<script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

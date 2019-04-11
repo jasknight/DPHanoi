@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticated
 {
@@ -18,7 +19,6 @@ class AdminAuthenticated
         if (Auth::guard('admin')->check()) {
             return $next($request);
         }
-        
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.login');
     }
 }
