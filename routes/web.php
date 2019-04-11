@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
+    Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login')->middleware('admin.guest');
     Route::post('/admin/login', 'Admin\Auth\LoginController@login');
     Route::get('/verify', 'Auth\CustomVerificationController@show')->name('verify')->middleware('role:user');
     Route::get('/', function () {
@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web']], function () {
     })->name('homepage');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function () {
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.index');
 
     Route::get('/users/import', 'Admin\UserController@showUserImport')->name('admin.users.showUserImport');
