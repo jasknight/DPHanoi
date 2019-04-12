@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
 
     Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
     Route::get('/admins/create', 'Admin\AdminController@create')->name('admin.admins.create');
+    Route::post('/admins/register', 'Admin\Auth\RegisterController@register')->name('admin.admins.register');
 });
 
 Route::get('/home', function () {

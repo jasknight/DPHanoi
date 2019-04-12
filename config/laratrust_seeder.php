@@ -3,17 +3,19 @@
 return [
     'role_structure' => [
         'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'acl' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'superadministrator' => 'c,r,u,d',
+            'district_administrator' => 'c,r,u,d',
+            'subdistrict_administrator' => 'c,r,u,d',
+            'user' => 'r,u'
         ],
         'district_administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'district_administrator' => 'c,r,u,d',
+            'subdistrict_administrator' => 'c,r,u,d',
+            'user' => 'c,r,u,d',
         ],
         'subdistrict_administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'subdistrict_administrator' => 'c,r,u,d',
+            'users' => 'c,r,u,d'
         ],
         'user' => [
             'profile' => 'r,u'
