@@ -44,16 +44,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
 
-    // public function showLoginForm()
-    // {
-    //     // if (Auth::guard('admin')->check()) {
-    //     //     return redirect()->route('admin.users.index');
-    //     // }
-    //     // // return view('admin.auth.login');
-    // }
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
+    }
 
     protected function loggedOut(Request $request)
     {

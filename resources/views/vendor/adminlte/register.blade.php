@@ -10,7 +10,7 @@
 @section('body')
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}"><b>Form đăng ký thành viên DP Hà Nội</b></a>
         </div>
 
         <div class="register-box-body">
@@ -271,10 +271,34 @@
                 allowClear: true
             });
 
-            var districtValue = $('#district-select').data('value');
-            if (typeof districtValue !== undefined) {
-                $('#district-select').val(districtValue);
-            }
+            $('#subdistrict-select').prop('disabled', true);
+            $('#district-select').on('change', function (e) {
+                var districtValue = $('#district-select').val();
+                if (districtValue === '') { 
+                    $('#subdistrict-select').prop('disabled', true);
+                    $('#subdistrict-select').empty().select2({
+                        placeholder: 'Chọn 1 trong số lựa chọn sau',
+                        data: [],
+                        allowClear: true
+                    });
+
+                } else {
+                    $.ajax({
+                        url : "/api/subdistricts",
+                        type : "post",
+                        data : {
+                            district_id : districtValue
+                        },
+                        success : function (result){
+                            $('#subdistrict-select').prop('disabled', false);
+                            $('#subdistrict-select').empty().select2({
+                                data: result.subdistricts,
+                                allowClear: true
+                            });
+                        }
+                    });
+                }
+            });
         });
 
         function fillData() {

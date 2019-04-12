@@ -140,7 +140,8 @@ class RegisterController extends Controller
             'status' => User::NOT_APPROVED,
             'district_id' => $data['district_id'],
             'subdistrict_id' => $data['subdistrict_id'],
-            'status' => User::NOT_APPROVED
+            'status' => User::NOT_APPROVED,
+            'approver_id' => null
         ]);
 
         $userRole = Role::where('name', 'user')->first();

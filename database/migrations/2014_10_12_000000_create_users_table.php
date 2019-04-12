@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->boolean('labor_ability');
             $table->string('employment_status')->nullable();
             $table->integer('income')->default(0);
+            $table->integer('approver_id')->nullable();
             $table->integer('status')->comment('0 is not approved, 1 is approved');
             $table->rememberToken();
             $table->timestamps();

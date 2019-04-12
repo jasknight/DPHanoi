@@ -19,7 +19,7 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
-Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
+Route::get('/admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login')->middleware('guest:admin');
 Route::post('/admin/login', 'Admin\Auth\LoginController@login');
 Route::post('/admin/logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
