@@ -129,7 +129,7 @@ return [
 
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
+            'rule-name' => 'custom-message'
         ],
     ],
 
@@ -144,6 +144,23 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'họ tên',
+        'password' => 'mật khẩu',
+        'identity_card' => 'số chứng minh thư nhân dân',
+        'phone' => 'số điện thoại',
+        'birthday' => 'ngày sinh',
+        'gender' => 'giới tính',
+        'district_id' => 'quận/huyện',
+        'subdistrict_id' => 'phường/xã',
+        'employment_status' => 'tình trạng việc làm',
+        'labor_ability' => 'khả năng lao động',
+        'income' => 'thu nhập',
+        'academic_level' => 'trình độ học vấn',
+        'disability' => 'dạng tật',
+        'disability_detail' => 'chi tiết tình trạng kt',
+        'specialize' => 'chuyên môn',
+        'need' => 'nhu cầu'
+    ],
 
 ];

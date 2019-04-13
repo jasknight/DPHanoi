@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Models\User;
-use App\Models\Disability;
-use App\Models\UserDisability;
-use App\Models\Need;
+use App\Models\Admin;
 use App\Models\Role;
-use App\Models\UserNeed;
-use App\Models\District;
-use App\Models\Subdistrict;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -66,17 +60,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => 'Giá trị :attribute không được trống.',
+            'string' => 'Giá trị của :attribute phải là chuỗi kí tự',
+            'email' => 'Địa chỉ email không hợp lệ',
+            'integer' => 'Giá trị của :attribute phải là số',
+            'size' => 'Giá trị của :attribute phải có :size kí tự',
+            'min' => 'Giá trị của :attribute ít nhất phải có :min kí tự',
+            'regex' => 'Giá trị của :attribute phải là chuỗi chữ số'
+        ];
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'identity_card' => ['required', 'string'],
-            'phone' => ['required', 'string', 'min:8'],
+            'identity_card' => ['required', 'string', 'size:9', 'regex:/^([0-9]+)$/'],
+            'phone' => ['required', 'string', 'min:10', 'regex:/^([0-9]+)$/'],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'district_id' => ['required', 'integer'],
             'subdistrict_id' => ['required', 'integer']
-        ]);
+        ], $messages);
     }
 
     /**
@@ -85,40 +89,27 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        $user = User::create([
+        $this->validator($request->all())->validate();
+
+        $data = $request->all();
+        $admin = Admin::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone' => $data['phone'],
+            'identity_card' => $data['identity_card'],
             'birthday' => $data['birthday'],
             'gender' => $data['gender'],
             'district_id' => $data['district_id'],
             'subdistrict_id' => $data['subdistrict_id'],
         ]);
 
-        $userRole = Role::where('name', 'user')->first();
-        $user->attachRole($userRole);
+        $adminRole = Role::find($data['role']);
+        $admin->attachRole($adminRole);
 
-        UserDisability::create([
-            'user_id' => $user->id,
-            'disability_id' => $data['disability'],
-            'detail' => $data['disability_detail']
-        ]);
-
-        $userNeed = $data['need'];
-        foreach($userNeed as $need) {
-            $dataUserNeed[] = [
-                'user_id' => $user->id,
-                'need_id' => $need,
-                'detail' => $this->getNeedDetail($need, $data),
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-            ];
-        }
-        UserNeed::insert($dataUserNeed);
-        return $user;
+        return redirect()->route('admin.admins.index');
     }
 
     protected function getNeedDetail($need, $data) {

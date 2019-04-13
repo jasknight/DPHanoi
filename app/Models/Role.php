@@ -8,18 +8,9 @@ class Role extends LaratrustRole
 {
     protected $table = 'roles';
 
-    const CAN_CREATE = [
-    	'superadministrator' => [
-    		'superadministrator',
-    		'district_administrator',
-    		'subdistrict_administrator'
-    	],
-    	'district_administrator' => [
-    		'district_administrator',
-    		'subdistrict_administrator'
-    	],
-    	'subdistrict_administrator' => [
-    		'subdistrict_administrator'
-    	]
+    const ROLE_NAME = [
+    	'superadministrator' => 'Quản trị viên trung ương',
+    	'district_administrator' => 'Quản trị viên quận, huyện',
+    	'subdistrict_administrator' => 'Quản trị viên xã, phường'
     ];
 }

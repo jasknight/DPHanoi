@@ -15,12 +15,10 @@
         <th>Địa chỉ email</th>
         <th>Số điện thoại</th>
         <th>Giới tính</th>
-        <th>Địa chỉ</th>
+        <th>Ngày sinh</th>
         <th>Quận/Huyện</th>
         <th>Phường/Xã</th>
-        <th>Tình trạng</th>
         <th>Chi tiết</th>
-        <th>Xác thực</th>
         </tr>
     </thead>
     </table>
@@ -30,7 +28,7 @@
     <script>
         $( function() {
             $('#user-table').DataTable( {
-                'data': {!! $users !!},
+                'data': {!! $admins !!},
                 "scrollX": true,
                 'fixedHeader': true,
                 'columns': [
@@ -48,7 +46,7 @@
                             }
                         },
                     },
-                    { data: 'address' },
+                    { data: 'birthday' },
                     {
                         data: '',
                         render: function ( data, type, row, meta ) {
@@ -62,37 +60,17 @@
                         },
                     },
                     {
-                        data: 'status',
-                        render: function ( data, type, row, meta ) {
-                            if (row.status === 1) {
-                                return 'Đã xác thực';
-                            } else {
-                                return 'Chưa xác thực';
-                            }
-                        },
-                    },
-                    {
                         data: '',
                         render: function ( data, type, row, meta ) {
                             var html = '';
-                            html += `<a class='btn btn-info user-info' href='/admins/users/${row.id}' style='margin-right: 20px; width: 80px'>Thông tin</a>`;
+                            html += `<a class='btn btn-info user-info' href='/admins/admins/${row.id}' style='margin-right: 20px; width: 80px'>Thông tin</a>`;
                             html += "<a class='btn btn-danger' style='width: 80px'>Xóa</button>";
                             return html;
                         },
                     },
-                    {
-                        data: '',
-                        render: function ( data, type, row, meta ) {
-                            var html = '';
-                            if (row.status === 0) {
-                                html += "<button type='button' class='btn btn-success'>Xác thực</button>";
-                            }
-                            return html;
-                        },
-                    }
                 ],
                 'columnDefs': [ {
-                    'targets': [9, 10],
+                    'targets': [7],
                     'orderable': false,
                 }]
             });

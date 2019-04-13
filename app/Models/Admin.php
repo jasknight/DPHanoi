@@ -29,4 +29,14 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function district()
+    {
+        return $this->belongsTo('App\Models\District', 'district_id');
+    }
+
+    public function subdistrict()
+    {
+        return $this->belongsTo('App\Models\Subdistrict', 'subdistrict_id');
+    }
 }
