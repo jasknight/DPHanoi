@@ -16,7 +16,7 @@ class CreateNeedsTable extends Migration
         Schema::create('needs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('detail');
-            $table->timestamps();
+            $table->boolean('need_user_detail');
         });
     }
 

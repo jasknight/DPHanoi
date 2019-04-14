@@ -93,12 +93,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => ':attribute không được trống.',
+            'string' => ':attribute phải là chuỗi kí tự',
+            'email' => 'Địa chỉ email không hợp lệ',
+            'unique' => 'Địa chỉ email đã được sử dụng',
+            'integer' => ':attribute phải là số',
+            'size' => ':attribute phải có :size kí tự',
+            'min' => ':attribute ít nhất phải có :min kí tự',
+            'regex' => ':attribute phải là chuỗi chữ số'
+        ];
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'identity_card' => ['required', 'string'],
-            'phone' => ['required', 'string', 'min:8'],
+            'identity_card' => ['required', 'string', 'size:9', 'regex:/^([0-9]+)$/'],
+            'phone' => ['required', 'string', 'min:10', 'regex:/^([0-9]+)$/'],
             'birthday' => ['required', 'date'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'address' => ['required', 'string'],
@@ -112,7 +123,7 @@ class RegisterController extends Controller
             'need' => ['required'],
             'district_id' => ['required', 'integer'],
             'subdistrict_id' => ['required', 'integer']
-        ]);
+        ], $messages);
     }
 
     /**
@@ -140,8 +151,10 @@ class RegisterController extends Controller
             'status' => User::NOT_APPROVED,
             'district_id' => $data['district_id'],
             'subdistrict_id' => $data['subdistrict_id'],
-            'status' => User::NOT_APPROVED,
-            'approver_id' => null
+            'approver_id' => null,
+            'admin_update_id' => null,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         $userRole = Role::where('name', 'user')->first();

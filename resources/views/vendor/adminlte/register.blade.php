@@ -81,10 +81,7 @@
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('gender') ? 'has-error' : '' }}">
                         {{ Form::label('gender', 'Giới tính') }}
-                        <div>
-                            <label class="radio-inline"><input type="radio" name="gender" value="male" @if(old('gender')) checked @endif required>Nam</label>
-                            <label class="radio-inline"><input type="radio" name="gender" value="female" @if(old('gender')) checked @endif>Nữ</label>
-                        </div>
+                        {{ Form::select('gender', ['male' => 'Nam','female' => 'Nữ'], old('gender'), ['class' => 'form-control', 'id' => 'gender', 'required', 'placeholder' => 'Chọn 1 trong số những lựa chọn sau']) }}
                         @if ($errors->has('gender'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('gender') }}</strong>
@@ -104,11 +101,8 @@
                         @endif
                     </div>
                     <div class="form-group has-feedback {{ $errors->has('labor_ability') ? 'has-error' : '' }}">
-                            {{ Form::label('labor_ability', 'Khả năng lao động') }}
-                        <div>
-                            <label class="radio-inline"><input type="radio" name="labor_ability" @if(old('labor_ability')) checked @endif value="1" required>Còn</label>
-                            <label class="radio-inline"><input type="radio" name="labor_ability" @if(old('labor_ability')) checked @endif value="0">Không còn</label>
-                        </div>
+                        {{ Form::label('labor_ability', 'Khả năng lao động') }}
+                        {{ Form::select('labor_ability', ['1' => 'Có','0' => 'Không'], old('gender'), ['class' => 'form-control', 'id' => 'labor_ability', 'required', 'placeholder' => 'Chọn 1 trong số những lựa chọn sau']) }}
                         @if ($errors->has('labor_ability'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('labor_ability') }}</strong>
@@ -308,8 +302,8 @@
             $('#email').val('huydq2510@gmail.com');
             $('#phone').val('0368636007');
             $('#birthday').val('1996-10-25');
-            $('input:radio[name="gender"]').filter('[value="male"]').attr('checked', true);
-            $('input:radio[name="labor_ability"]').filter('[value="1"]').attr('checked', true);
+            $('#gender').val('male');
+            $('#labor_ability').val('1');
             $('#identity_card').val('0123456789');
             $('#district-select').val('2');
             $('#subdistrict-select').val('37');

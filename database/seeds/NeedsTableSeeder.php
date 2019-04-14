@@ -14,12 +14,12 @@ class NeedsTableSeeder extends Seeder
     public function run()
     {
         DB::table('needs')->insert([
-            ['detail' => 'Chăm sóc y tế, PHCN'],
-            ['detail' => 'Học văn hóa'],
-            ['detail' => 'Học nghề'],
-            ['detail' => 'Hỗ trợ sinh kế'],
-            ['detail' => 'Phổ biến thông tin'],
-            ['detail' => 'Hỗ trợ chính sách'],
+            ['detail' => 'Chăm sóc y tế, PHCN', 'need_user_detail' => 0],
+            ['detail' => 'Học văn hóa', 'need_user_detail' => 0],
+            ['detail' => 'Học nghề', 'need_user_detail' => 1],
+            ['detail' => 'Hỗ trợ sinh kế', 'need_user_detail' => 0],
+            ['detail' => 'Phổ biến thông tin', 'need_user_detail' => 0],
+            ['detail' => 'Hỗ trợ chính sách', 'need_user_detail' => 0],
         ]);
     }
 }

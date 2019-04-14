@@ -145,22 +145,22 @@ return [
     */
 
     'attributes' => [
-        'name' => 'họ tên',
-        'password' => 'mật khẩu',
-        'identity_card' => 'số chứng minh thư nhân dân',
-        'phone' => 'số điện thoại',
-        'birthday' => 'ngày sinh',
-        'gender' => 'giới tính',
-        'district_id' => 'quận/huyện',
-        'subdistrict_id' => 'phường/xã',
-        'employment_status' => 'tình trạng việc làm',
-        'labor_ability' => 'khả năng lao động',
-        'income' => 'thu nhập',
-        'academic_level' => 'trình độ học vấn',
-        'disability' => 'dạng tật',
-        'disability_detail' => 'chi tiết tình trạng kt',
-        'specialize' => 'chuyên môn',
-        'need' => 'nhu cầu'
+        'name' => 'Họ tên',
+        'password' => 'Mật khẩu',
+        'identity_card' => 'Số chứng minh thư nhân dân',
+        'phone' => 'Số điện thoại',
+        'birthday' => 'Ngày sinh',
+        'gender' => 'Giới tính',
+        'district_id' => 'Quận/huyện',
+        'subdistrict_id' => 'Phường/xã/thị trấn',
+        'employment_status' => 'Tình trạng việc làm',
+        'labor_ability' => 'Khả năng lao động',
+        'income' => 'Thu nhập',
+        'academic_level' => 'Trình độ học vấn',
+        'disability' => 'Dạng tật',
+        'disability_detail' => 'Chi tiết tình trạng kt',
+        'specialize' => 'Chuyên môn',
+        'need' => 'Nhu cầu'
     ],
 
 ];

@@ -117,6 +117,11 @@ return [
             'active' => ['admin/users']
         ],
         [
+            'text' => 'Thêm người dùng',
+            'url'  => 'admin/users/create',
+            'active' => ['admin/users/create']
+        ],
+        [
             'text' => 'Import người dùng',
             'url'  => 'admin/users/import',
             'active' => ['admin/users/import']
@@ -128,7 +133,7 @@ return [
             'active' => ['admin/admins']
         ],
         [
-            'text' => 'Thêm người quản trị',
+            'text' => 'Thêm quản trị viên',
             'url'  => 'admin/admins/create',
             'active' => ['admin/admins/create']
         ]
