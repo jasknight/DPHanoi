@@ -31,12 +31,23 @@ class UserController extends Controller
 
     public function showUserImport()
     {
-        return view('admin.user.import');
+        $addressData = $this->getAddressByRole();
+        $isSuperadministrator = $this->checkIsSuperAdmin();
+        return view('admin.user.import')->with([
+            'districts' => $addressData['districts'],
+            'subdistricts' => $addressData['subdistricts'],
+            'isSuperadministrator' => $isSuperadministrator,
+        ]);
     }
 
     public function importUser(Request $request)
     {
-        Excel::import(new UsersImport, request()->file('user_file'));
+        try {
+            $import = Excel::import(new UsersImport, request()->file('user_file'));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            dd($failures);
+        }
     }
 
     public function show(Request $request)
@@ -71,15 +82,12 @@ class UserController extends Controller
         if ($adminRole->name === 'superadministrator') {
             $data['districts'] = District::all();
             $data['subdistricts'] = Subdistrict::all();
-            $isSuperadministrator = true;
         } else if ($adminRole->name === 'district_administrator') {
             $data['districts'] = District::where('id', $admin->district_id)->get();
             $data['subdistricts'] = Subdistrict::where('district_id', $admin->district_id)->get();
-            $isSuperadministrator = false;
         } else {
             $data['districts'] = District::where('id', $admin->district_id)->get();
             $data['subdistricts'] = Subdistrict::where('id', $admin->subdistrict_id)->get();
-            $isSuperadministrator = false;
         }
 
         return $data;

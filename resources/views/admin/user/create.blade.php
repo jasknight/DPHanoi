@@ -79,7 +79,7 @@
             <div class="form-row">
                 <div class="form-input has-feedback {{ $errors->has('district_id') ? 'has-error' : '' }}">
                     {{ Form::label('district_id', 'Quận/Huyện') }}
-                    <select class="form-control search-select" name="district_id" id="district-select" data-value={{ old('district_id')}} required>
+                    <select class="form-control search-select" name="district_id" id="district-select" required>
                         <option>
                         @foreach ($districts as $district)
                             <option value={{ $district->id }}>{{ $district->name }}</option>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="form-input has-feedback {{ $errors->has('subdistrict_id') ? 'has-error' : '' }}">
                     {{ Form::label('subdistrict_id', 'Phường/Xã/Thị Trấn') }}
-                    <select class="form-control search-select" name="subdistrict_id" id="subdistrict-select" data-value={{ old('subdistrict_id')}} required>
+                    <select class="form-control search-select" name="subdistrict_id" id="subdistrict-select" required>
                         <option>
                         @foreach ($subdistricts as $subdistrict)
                             <option value={{ $subdistrict->id }}>{{ $subdistrict->name }}</option>
