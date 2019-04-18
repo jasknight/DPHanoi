@@ -19,12 +19,21 @@
         <th>Quận/Huyện</th>
         <th>Phường/Xã</th>
         <th>Tình trạng</th>
-        <th>Chi tiết</th>
+        <th>Chỉnh sửa</th>
+        <th>Xóa</th>
         <th>Xác thực</th>
         </tr>
     </thead>
     </table>
 @endsection
+
+@section('css')
+<style type="text/css">
+button {
+    width: 100px;
+}
+</style>
+@stop
 
 @section('js')
     <script>
@@ -75,8 +84,15 @@
                         data: '',
                         render: function ( data, type, row, meta ) {
                             var html = '';
-                            html += `<a class='btn btn-info user-info' href='/admins/users/${row.id}' style='margin-right: 20px; width: 80px'>Thông tin</a>`;
-                            html += "<a class='btn btn-danger' style='width: 80px'>Xóa</button>";
+                            html += `<a class='btn btn-info user-info' href='/admin/users/${row.id}'><i class='fa fa-edit'></i> Thông tin</a>`;
+                            return html;
+                        },
+                    },
+                    {
+                        data: '',
+                        render: function ( data, type, row, meta ) {
+                            var html = '';
+                            html += "<a class='btn btn-danger'><i class='fa fa-trash-o'></i> Xóa</a>";
                             return html;
                         },
                     },
@@ -85,7 +101,7 @@
                         render: function ( data, type, row, meta ) {
                             var html = '';
                             if (row.status === 0) {
-                                html += "<button type='button' class='btn btn-success'>Xác thực</button>";
+                                html += "<a class='btn btn-success'><i class='fa fa-check'></i> Xác thực</a>";
                             }
                             return html;
                         },

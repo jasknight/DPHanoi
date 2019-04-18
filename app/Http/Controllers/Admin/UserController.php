@@ -50,10 +50,21 @@ class UserController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show(Request $request, $id)
     {
-        $user = auth()->user();
-        return view('admin.user.show')->with(['user' => $user]);
+        $user = User::where('id', $id)->with(['disability']);
+        $addressData = $this->getAddressByRole();
+        $isSuperadministrator = $this->checkIsSuperAdmin();
+        $disabilities = Disability::all()->pluck('description', 'id');
+        $needs = Need::all();
+        return view('admin.user.show')->with([
+            'user' => $user,
+            'districts' => $addressData['districts'],
+            'subdistricts' => $addressData['subdistricts'],
+            'isSuperadministrator' => $isSuperadministrator,
+            'disabilities' => $disabilities,
+            'needs' => $needs
+        ]);
     }
 
     public function showCreateForm()

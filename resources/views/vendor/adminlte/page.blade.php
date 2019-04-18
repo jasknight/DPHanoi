@@ -3,6 +3,12 @@
 @section('adminlte_css')
     <link rel="stylesheet"
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
+    <style type="text/css">
+        .content {
+            background: #fff;
+            margin: 10px;
+        }
+    </style>
     @stack('css')
     @yield('css')
 @stop
