@@ -147,7 +147,7 @@
                 </div>
                 <div class="form-input has-feedback {{ $errors->has('specialize') ? 'has-error' : '' }}">
                     {{ Form::label('specialize', 'Chuyên Môn') }}
-                    {{ Form::text('specialize', $user->specialize, ['class' => 'form-control', 'required']) }}
+                    {{ Form::text('specialize', $user->specialize, ['class' => 'form-control']) }}
                     @if ($errors->has('specialize'))
                     <span class="help-block">
                         <strong>{{ $errors->first('specialize') }}</strong>
@@ -159,7 +159,7 @@
             <div class="form-row">
                 <div class="form-input has-feedback {{ $errors->has('employment_status') ? 'has-error' : '' }}">
                     {{ Form::label('employment_status', 'Công Việc Đang Làm (Nếu Có)') }}
-                    {{ Form::text('employment_status', $user->employment_status, ['class' => 'form-control', 'required']) }}
+                    {{ Form::text('employment_status', $user->employment_status, ['class' => 'form-control']) }}
                     @if ($errors->has('employment_status'))
                     <span class="help-block">
                         <strong>{{ $errors->first('employment_status') }}</strong>

@@ -53,13 +53,19 @@ class UserController extends Controller
 
     public function showUserExport()
     {
-        return view('admin.user.export');
+        $addressData = $this->getAddressByRole();
+        $isSuperadministrator = $this->checkIsSuperAdmin();
+        return view('admin.user.export')->with([
+            'districts' => $addressData['districts'],
+            'subdistricts' => $addressData['subdistricts'],
+            'isSuperadministrator' => $isSuperadministrator,
+        ]);
     }
 
     public function exportUser(Request $request)
     {
         try {
-            return Excel::download(new UsersExport, 'users.xlsx');
+            return Excel::download(new UsersExport($request->district_id, $request->subdistrict_id), 'users.xlsx');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
         }
@@ -69,7 +75,7 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->with(['userDisability'])->first();
         $isSuperadministrator = $this->checkIsSuperAdmin();
-        $disabilities = Disability::all()->pluck('description', 'id');
+        $disabilities = Disability::all()->pluck('name', 'id');
         $needs = Need::all();
         $districts = District::all();
         $subdistricts = Subdistrict::where('district_id', $user->district_id)->get();
@@ -87,7 +93,7 @@ class UserController extends Controller
     {
         $isSuperadministrator = $this->checkIsSuperAdmin();
         $addressData = $this->getAddressByRole();
-        $disabilities = Disability::all()->pluck('description', 'id');
+        $disabilities = Disability::all()->pluck('name', 'id');
         $needs = Need::all();
         return view('admin.user.create')->with([
             'districts' => $addressData['districts'],
@@ -257,13 +263,11 @@ class UserController extends Controller
             'birthday' => ['required', 'string'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'address' => ['required', 'string'],
-            'employment_status' => ['string'],
             'labor_ability' => ['required', 'boolean'],
             'income' => ['integer'],
             'academic_level' => ['required'],
             'disability' => ['required', 'integer'],
             'disability_detail' => ['required', 'string'],
-            'specialize' => ['required', 'string'],
             'need' => ['required'],
             'district_id' => ['required', 'integer'],
             'subdistrict_id' => ['required', 'integer']
