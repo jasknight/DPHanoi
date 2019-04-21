@@ -25,11 +25,34 @@
         </tr>
     </thead>
     </table>
+
+<form action="/users/approve/" method="POST" id="approve-form">
+    @csrf
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Xác thực người dùng</h4>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc chắn về thông tin người dùng này không ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-confirm-modal">Xác thực</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
 @endsection
 
 @section('css')
 <style type="text/css">
-button {
+#user-table button {
     width: 100px;
 }
 </style>
@@ -38,6 +61,8 @@ button {
 @section('js')
     <script>
         $( function() {
+            var approveId = null;
+
             $('#user-table').DataTable( {
                 'data': {!! $users !!},
                 "scrollX": true,
@@ -101,7 +126,7 @@ button {
                         render: function ( data, type, row, meta ) {
                             var html = '';
                             if (row.status === 0) {
-                                html += "<a class='btn btn-success'><i class='fa fa-check'></i> Xác thực</a>";
+                                html += `<button class='btn btn-success btn-approve' data-toggle='modal' data-target='#myModal' data-id=${row.id}><i class='fa fa-check'></i> Xác thực</button>`;
                             }
                             return html;
                         },
@@ -112,6 +137,16 @@ button {
                     'orderable': false,
                 }]
             });
+
+            $('.btn-approve').click(function() {
+                approveId = $(this).data('id');
+            })
+
+            $('.btn-confirm-modal').click(function(e) {
+                e.preventDefault();
+                $('#approve-form').attr('action', '/admin/users/approve/' + approveId);
+                $('#approve-form').submit();
+            })
         });
     </script>
 @endsection

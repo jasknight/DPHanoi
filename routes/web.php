@@ -29,7 +29,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
     })->name('admin.homepage');
     
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.index');
-
     Route::get('/users/import', 'Admin\UserController@showUserImport')->name('admin.users.showUserImport');
     Route::post('/users/import', 'Admin\UserController@importUser')->name('admin.users.importUser');
     Route::get('/users/export', 'Admin\UserController@showUserExport')->name('admin.users.showUserExport');
@@ -37,6 +36,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
     Route::get('/users/create', 'Admin\UserController@showCreateForm')->name('admin.users.showUserCreateForm');
     Route::post('/users/create', 'Admin\UserController@createUser')->name('admin.users.createUser');
     Route::get('/users/{id}', 'Admin\UserController@show')->name('admin.users.show');
+    Route::post('/users/approve/{id}', 'Admin\UserController@approve')->name('admin.users.approve');
+    Route::post('/users/edit/{id}', 'Admin\UserController@edit')->name('admin.users.editUser');
 
     Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
     Route::get('/admins/create', 'Admin\AdminController@create')->name('admin.admins.create');

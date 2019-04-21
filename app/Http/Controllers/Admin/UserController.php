@@ -67,15 +67,16 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
-        $user = User::where('id', $id)->with(['disability']);
-        $addressData = $this->getAddressByRole();
+        $user = User::where('id', $id)->with(['userDisability'])->first();
         $isSuperadministrator = $this->checkIsSuperAdmin();
         $disabilities = Disability::all()->pluck('description', 'id');
         $needs = Need::all();
+        $districts = District::all();
+        $subdistricts = Subdistrict::where('district_id', $user->district_id)->get();
         return view('admin.user.show')->with([
             'user' => $user,
-            'districts' => $addressData['districts'],
-            'subdistricts' => $addressData['subdistricts'],
+            'districts' => $districts,
+            'subdistricts' => $subdistricts,
             'isSuperadministrator' => $isSuperadministrator,
             'disabilities' => $disabilities,
             'needs' => $needs
@@ -223,5 +224,77 @@ class UserController extends Controller
                 return null;
                 break;
         }
+    }
+
+    public function approve($id) {
+        $user = User::find($id);
+        $user->status = User::APPROVED;
+        $user->approver_id = Auth::guard('admin')->user()->id;
+        $user->admin_update_id = Auth::guard('admin')->user()->id;
+        $user->updated_at = now();
+        $user->save();
+        return redirect()->route('admin.users.index');
+    }
+
+    protected function editValidator(array $data, $id)
+    {
+        $messages = [
+            'required' => ':attribute không được trống.',
+            'string' => ':attribute phải là chuỗi kí tự',
+            'email' => 'Địa chỉ email không hợp lệ',
+            'unique' => 'Địa chỉ email đã được sử dụng',
+            'integer' => ':attribute phải là số',
+            'size' => ':attribute phải có :size kí tự',
+            'min' => ':attribute ít nhất phải có :min kí tự',
+            'regex' => ':attribute phải là chuỗi chữ số'
+        ];
+
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'. $id],
+            'identity_card' => ['required', 'string', 'size:9', 'regex:/^([0-9]+)$/'],
+            'phone' => ['required', 'string', 'min:10', 'regex:/^([0-9]+)$/'],
+            'birthday' => ['required', 'string'],
+            'gender' => ['required', Rule::in(['male', 'female'])],
+            'address' => ['required', 'string'],
+            'employment_status' => ['string'],
+            'labor_ability' => ['required', 'boolean'],
+            'income' => ['integer'],
+            'academic_level' => ['required'],
+            'disability' => ['required', 'integer'],
+            'disability_detail' => ['required', 'string'],
+            'specialize' => ['required', 'string'],
+            'need' => ['required'],
+            'district_id' => ['required', 'integer'],
+            'subdistrict_id' => ['required', 'integer']
+        ], $messages);
+    }
+
+    public function edit(Request $request, $id) {
+        $data = $request->all();
+        $this->editValidator($data, $id)->validate();
+        $user = User::find($id);
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'identity_card' => $data['identity_card'],
+            'birthday' => $data['birthday'],
+            'gender' => $data['gender'],
+            'address' => $data['address'],
+            'employment_status' => $data['employment_status'],
+            'labor_ability' => $data['labor_ability'],
+            'income' => $data['income'],
+            'academic_level' => $data['academic_level'],
+            'specialize' => $data['specialize'],
+            'status' => User::APPROVED,
+            'district_id' => $data['district_id'],
+            'subdistrict_id' => $data['subdistrict_id'],
+            'approver_id' => Auth::guard('admin')->user()->id,
+            'admin_update_id' => null,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        return redirect()->back()->with('success', 'Chỉnh sửa thành công');
     }
 }

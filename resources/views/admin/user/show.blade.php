@@ -7,8 +7,13 @@
 @stop
 
 @section('content')
+    @if (\Session::has('success'))
+        <div class="alert alert-success">
+            {!! \Session::get('success') !!}
+        </div>
+    @endif
 	<div>
-        {!! Form::open(['url' => route('admin.users.createUser'), 'method' => 'post', 'id' => 'admin-register-form']) !!}
+        {!! Form::open(['url' => route('admin.users.editUser', ['id' => $user->id]), 'method' => 'post', 'id' => 'admin-register-form']) !!}
             @csrf
             <div class="form-row">
                 <div class="form-input has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -176,7 +181,7 @@
             <div class="form-row">
                 <div class="form-input has-feedback {{ $errors->has('disability') ? 'has-error' : '' }}">
                     {{ Form::label('disability', 'Hình thức khuyết tật') }}
-                    {{ Form::select('disability', $disabilities, $user->disability_id, ['class' => 'form-control', 'required', 'placeholder' => 'Chọn 1 trong số những lựa chọn sau']) }}
+                    {{ Form::select('disability', $disabilities, $user->userDisability->disability_id, ['class' => 'form-control', 'required', 'placeholder' => 'Chọn 1 trong số những lựa chọn sau']) }}
                     @if ($errors->has('disability'))
                     <span class="help-block">
                         <strong>{{ $errors->first('disability') }}</strong>
@@ -186,7 +191,7 @@
 
                 <div class="form-input has-feedback {{ $errors->has('disability_detail') ? 'has-error' : '' }}">
                     {{ Form::label('disability_detail', 'Chi tiết tình trạng khuyết tật') }}
-                    {{ Form::text('disability_detail', old('disability_detail'), ['class' => 'form-control', 'required']) }}
+                    {{ Form::text('disability_detail', $user->userDisability->detail, ['class' => 'form-control', 'required']) }}
                     @if ($errors->has('disability_detail'))
                         <span class="help-block">
                             <strong>{{ $errors->first('disability_detail') }}</strong>
@@ -197,19 +202,22 @@
 
             <div class="form-group has-feedback {{ $errors->has('need') ? 'has-error' : '' }}">
                 {{ Form::label('need', 'Nhu Cầu') }}
+                @php
+                    $needIds = $user->userNeed->pluck('need_id')->toArray()
+                @endphp
                 <div class="checkbox-container">
                     @foreach ($needs as $need)
                         <div class="checkbox">
                             @if ($need->detail === 'Học nghề')
                                 <label>
-                                    {{ Form::checkbox('need[]', $need->id) }}
+                                    {{ Form::checkbox('need[]', $need->id, in_array($need->id, $needIds)) }}
                                     Học nghề (Ghi rõ nghề muốn học)
                                 </label>
                                 <br/>
-                                <input type="text" name="user-job-detail" id="user-job-detail">
+                                {{ Form::text('user-job-detail', $user->userNeed->where('need_id', $need->id)->first()->detail, ['class' => 'form-control', 'id' => 'user-job-detail']) }}
                             @else
                                 <label>
-                                    {{ Form::checkbox('need[]', $need->id) }}
+                                    {{ Form::checkbox('need[]', $need->id, in_array($need->id, $needIds)) }}
                                     {{ $need->detail }}
                                 </label>
                             @endif
@@ -224,7 +232,7 @@
             </div>
 
             <div class="form-input">
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
+                <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
             </div>
         {!! Form::close() !!}
     </div>
@@ -274,41 +282,43 @@ textarea {
             { dateFormat: 'yy-mm-dd' }
         );
 
-        $('.search-select').select2({
+        $('#district-select').select2({
             placeholder: 'Chọn 1 trong số lựa chọn sau',
             allowClear: true
+        }).val({{$user->district_id}}).trigger('change');
+
+        $('#subdistrict-select').select2({
+            placeholder: 'Chọn 1 trong số lựa chọn sau',
+            allowClear: true
+        }).val({{$user->subdistrict_id}}).trigger('change');
+
+        $('#district-select').on('change', function (e) {
+            var districtValue = $('#district-select').val();
+            if (districtValue === '') { 
+                $('#subdistrict-select').prop('disabled', true);
+                $('#subdistrict-select').empty().select2({
+                    placeholder: 'Chọn 1 trong số lựa chọn sau',
+                    data: [],
+                    allowClear: true
+                });
+
+            } else {
+                $.ajax({
+                    url : "/api/subdistricts",
+                    type : "post",
+                    data : {
+                        district_id : districtValue
+                    },
+                    success : function (result){
+                        $('#subdistrict-select').prop('disabled', false);
+                        $('#subdistrict-select').empty().select2({
+                            data: result.subdistricts,
+                            allowClear: true
+                        });
+                    }
+                });
+            }
         });
-
-        if ({{$isSuperadministrator}}) {
-            $('#subdistrict-select').prop('disabled', true);
-            $('#district-select').on('change', function (e) {
-                var districtValue = $('#district-select').val();
-                if (districtValue === '') { 
-                    $('#subdistrict-select').prop('disabled', true);
-                    $('#subdistrict-select').empty().select2({
-                        placeholder: 'Chọn 1 trong số lựa chọn sau',
-                        data: [],
-                        allowClear: true
-                    });
-
-                } else {
-                    $.ajax({
-                        url : "/api/subdistricts",
-                        type : "post",
-                        data : {
-                            district_id : districtValue
-                        },
-                        success : function (result){
-                            $('#subdistrict-select').prop('disabled', false);
-                            $('#subdistrict-select').empty().select2({
-                                data: result.subdistricts,
-                                allowClear: true
-                            });
-                        }
-                    });
-                }
-            });
-        }
     });
 </script>
 @stop
