@@ -19,6 +19,7 @@ class NeedsTableSeeder extends Seeder
             ['detail' => 'Học nghề', 'need_user_detail' => 1],
             ['detail' => 'Hỗ trợ sinh kế', 'need_user_detail' => 0],
             ['detail' => 'Phổ biến thông tin', 'need_user_detail' => 0],
+            ['detail' => 'Đi lại, tiếp cận xây dựng', 'need_user_detail' => 0],
             ['detail' => 'Hỗ trợ chính sách', 'need_user_detail' => 0],
         ]);
     }

@@ -7,6 +7,14 @@
 @stop
 
 @section('content')
+    @if(!empty($errors->all()))
+        <div class="text-danger">
+            Lỗi:
+            @foreach($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
     {!! Form::open(['url' => route('admin.users.importUser'), 'method' => 'post', 'files' => true]) !!}
         <div class="row">
             <div class="col-md-4 form-group has-feedback {{ $errors->has('district_id') ? 'has-error' : '' }}">

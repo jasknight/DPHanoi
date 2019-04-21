@@ -14,12 +14,12 @@ class DisabilitiesTableSeeder extends Seeder
     public function run()
     {
         DB::table('disabilities')->insert([
-            ['description' => 'Vận động'],
-            ['description' => 'Trí tuệ'],
-            ['description' => 'Thần kinh tâm thần'],
-            ['description' => 'Nghe nói'],
-            ['description' => 'Thị giác'],
-            ['description' => 'Khác'],
+            ['name' => 'Vận động'],
+            ['name' => 'Trí tuệ'],
+            ['name' => 'Thần kinh'],
+            ['name' => 'Nghe nói'],
+            ['name' => 'Thị giác'],
+            ['name' => 'Khác'],
         ]);
     }
 }

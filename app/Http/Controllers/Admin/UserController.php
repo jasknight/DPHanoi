@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -44,9 +45,23 @@ class UserController extends Controller
     {
         try {
             $import = Excel::import(new UsersImport, request()->file('user_file'));
+            return redirect()->route('admin.users.index');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
-            dd($failures);
+        }
+    }
+
+    public function showUserExport()
+    {
+        return view('admin.user.export');
+    }
+
+    public function exportUser(Request $request)
+    {
+        try {
+            return Excel::download(new UsersExport, 'users.xlsx');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
         }
     }
 
@@ -132,7 +147,7 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'identity_card' => ['required', 'string', 'size:9', 'regex:/^([0-9]+)$/'],
             'phone' => ['required', 'string', 'min:10', 'regex:/^([0-9]+)$/'],
-            'birthday' => ['required', 'date'],
+            'birthday' => ['required', 'string'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'address' => ['required', 'string'],
             'employment_status' => ['string'],

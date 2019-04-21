@@ -26,10 +26,10 @@ class CreateUsersTable extends Migration
             $table->integer('district_id');
             $table->integer('subdistrict_id');
             $table->string('academic_level');
-            $table->string('specialize');
+            $table->string('specialize')->nullable();
             $table->boolean('labor_ability');
             $table->string('employment_status')->nullable();
-            $table->integer('income')->default(0);
+            $table->integer('income')->nullable();
             $table->integer('approver_id')->nullable();
             $table->integer('admin_update_id')->nullable();
             $table->integer('status')->comment('0 is not approved, 1 is approved');

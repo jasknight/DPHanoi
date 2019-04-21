@@ -126,6 +126,11 @@ return [
             'url'  => 'admin/users/import',
             'active' => ['admin/users/import']
         ],
+        [
+            'text' => 'Export người dùng',
+            'url'  => 'admin/users/export',
+            'active' => ['admin/users/export']
+        ],
         'Admin',
         [
             'text' => 'Danh sách quản trị viên',

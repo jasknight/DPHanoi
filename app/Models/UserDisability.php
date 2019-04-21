@@ -11,4 +11,9 @@ class UserDisability extends Model
     protected $fillable = [
         'user_id', 'disability_id', 'detail'
     ];
+
+    public function disability()
+    {
+    	return $this->belongsTo('App\Models\Disability', 'disability_id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\UserNeed;
 use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
@@ -17,6 +18,8 @@ class User extends Authenticatable
 
     const MALE = 'male';
     const FEMALE = 'female';
+
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -54,8 +57,13 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Subdistrict', 'subdistrict_id');
     }
 
-    public function disability()
+    public function userDisability()
     {
-        return $this->hasOne('App\Models\UserDisability', 'user_id');
+        return $this->hasOne('App\Models\UserDisability');
+    }
+
+    public function userNeed()
+    {
+        return $this->hasMany('App\Models\UserNeed');
     }
 }
