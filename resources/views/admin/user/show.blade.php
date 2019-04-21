@@ -214,7 +214,7 @@
                                     Học nghề (Ghi rõ nghề muốn học)
                                 </label>
                                 <br/>
-                                {{ Form::text('user-job-detail', $user->userNeed->where('need_id', $need->id)->first()->detail, ['class' => 'form-control', 'id' => 'user-job-detail']) }}
+                                {{ Form::text('user-job-detail', $user->userNeed->where('need_id', $need->id)->first() ? $user->userNeed->where('need_id', $need->id)->first()->detail : '', ['class' => 'form-control', 'id' => 'user-job-detail']) }}
                             @else
                                 <label>
                                     {{ Form::checkbox('need[]', $need->id, in_array($need->id, $needIds)) }}
