@@ -114,34 +114,55 @@ return [
         [
             'text' => 'Danh sách người dùng',
             'url'  => 'admin/users',
+            'icon'  => 'user',
             'active' => ['admin/users']
         ],
         [
             'text' => 'Thêm người dùng',
             'url'  => 'admin/users/create',
+            'icon'  => 'plus-square',
             'active' => ['admin/users/create']
         ],
         [
             'text' => 'Import người dùng',
             'url'  => 'admin/users/import',
+            'icon'  => 'upload',
             'active' => ['admin/users/import']
         ],
         [
             'text' => 'Export người dùng',
             'url'  => 'admin/users/export',
+            'icon'  => 'download',
             'active' => ['admin/users/export']
         ],
         'Admin',
         [
             'text' => 'Danh sách quản trị viên',
             'url'  => 'admin/admins',
+            'icon'  => 'user',
             'active' => ['admin/admins']
         ],
         [
             'text' => 'Thêm quản trị viên',
             'url'  => 'admin/admins/create',
+            'icon'  => 'plus-square',
             'active' => ['admin/admins/create']
-        ]
+        ],
+        'Báo cáo',
+        [
+            'text'    => 'Biểu đồ',
+            'icon'    => 'bar-chart',
+            'submenu' => [
+                [
+                    'text' => 'Tất cả',
+                    'url'  => 'admin/report',
+                ],
+                [
+                    'text' => 'Chi tiết',
+                    'url'  => 'admin/report/detail',
+                ],
+            ],
+        ],
     ],
 
     /*
