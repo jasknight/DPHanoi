@@ -11,12 +11,50 @@
         <div class="col-md-6">
             <div class="box box-success">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Giới tính</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                        </button>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="gender-chart" style="height:300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Khả năng lao động</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                        </button>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="labor-ability-chart" style="height:300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
                     <h3 class="box-title">Dạng tật</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                     class="fa fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -37,7 +75,6 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -54,6 +91,53 @@
 @section('js')
 <script type="text/javascript">
     $(function () {
+        function loadGenderChart() {
+            var userGender = [];
+            @foreach($userGender as $count)
+                userGender.push('{{ $count }}')
+            @endforeach
+            console.log(userGender);
+            var genderChart = new Chart(document.getElementById("gender-chart"), {
+                type: 'pie',
+                data: {
+                    labels: ['Nam', 'Nữ'],
+                    datasets: [
+                        {
+                            label: '# Số người khuyết tật',
+                            data: userGender,
+                            backgroundColor: [
+                                '#f16954',
+                                '#39a65a',
+                            ]
+                        }
+                    ]
+                }
+            });
+        }
+
+        function loadLaborAbilityChart() {
+            var userLaborAbility = [];
+            @foreach($userLaborAbility as $count)
+                userLaborAbility.push('{{ $count }}')
+            @endforeach
+            var laborAbilityChart = new Chart(document.getElementById("labor-ability-chart"), {
+                type: 'pie',
+                data: {
+                    labels: ['Còn', 'Không còn'],
+                    datasets: [
+                        {
+                            label: '# Số người khuyết tật',
+                            data: userLaborAbility,
+                            backgroundColor: [
+                                '#f16954',
+                                '#39a65a',
+                            ]
+                        }
+                    ]
+                }
+            });
+        }
+
         function loadDisabilityChart() {
             var disabilites = [];
             var userDisability = [];
@@ -77,7 +161,7 @@
                                 '#f39c14',
                                 '#53c0ef',
                                 '#3d8dbb',
-                                '#d2d6de'
+                                '#9966ff'
                             ]
                         }
                     ]
@@ -119,6 +203,7 @@
                                 '#f39c14',
                                 '#53c0ef',
                                 '#3d8dbb',
+                                '#9966ff',
                                 '#d2d6de'
                             ]
                         }
@@ -136,6 +221,8 @@
             });
         }
 
+        loadGenderChart();
+        loadLaborAbilityChart();
         loadDisabilityChart();
         loadNeedChart();
     })

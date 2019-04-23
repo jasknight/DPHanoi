@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\UserDisability;
 use App\Models\UserNeed;
 use App\Models\Need;
+use App\Models\User;
 
 class ReportController extends Controller
 {
@@ -25,11 +26,21 @@ class ReportController extends Controller
         foreach ($needs as $id => $need) {
             $userNeed[] = UserNeed::where('need_id', $id)->get()->count();
         }
+
+        $userGender = [];
+        $userGender[] = User::where('gender', 'male')->get()->count();
+        $userGender[] = User::where('gender', 'female')->get()->count();
+
+        $userLaborAbility = [];
+        $userLaborAbility[] = User::where('labor_ability', 1)->get()->count();
+        $userLaborAbility[] = User::where('labor_ability', 0)->get()->count();
         return view('admin.report.all')->with([
             'disabilites' => $disabilites,
             'userDisability' => $userDisability,
             'needs' => $needs,
-            'userNeed' => $userNeed
+            'userNeed' => $userNeed,
+            'userGender' => $userGender,
+            'userLaborAbility' => $userLaborAbility
         ]);
     }
 }

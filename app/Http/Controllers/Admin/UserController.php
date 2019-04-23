@@ -291,14 +291,45 @@ class UserController extends Controller
             'income' => $data['income'],
             'academic_level' => $data['academic_level'],
             'specialize' => $data['specialize'],
-            'status' => User::APPROVED,
+            'status' => $user->status,
             'district_id' => $data['district_id'],
             'subdistrict_id' => $data['subdistrict_id'],
-            'approver_id' => Auth::guard('admin')->user()->id,
-            'admin_update_id' => null,
+            'approver_id' => $user->approver_id,
+            'admin_update_id' => Auth::guard('admin')->user()->id,
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        $userDisability = UserDisability::where('user_id', $id)->first();
+        $userDisability->update([
+            'disability_id' => $data['disability'],
+            'detail' => $data['disability_detail'],
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
+
+        $requestUserNeedIds = $data['need'];
+        $userNeedIds = UserNeed::where('user_id', $id)->get()->pluck('need_id')->toArray();
+        $deletedIds = array_diff($userNeedIds, $requestUserNeedIds);
+        foreach($requestUserNeedIds as $needId) {
+            $userNeed = UserNeed::where(['user_id' => $id, 'need_id' => $needId])->first();
+            if (empty($userNeed)) {
+                UserNeed::create([
+                    'user_id' => $user->id,
+                    'need_id' => $needId,
+                    'detail' => $this->getNeedDetail($needId, $data),
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
+            } else {
+                $userNeed->update([
+                    'detail' => $this->getNeedDetail($needId, $data),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ]);
+            }
+        }
+        foreach ($deletedIds as $deletedId) {
+            UserNeed::where(['user_id' => $id, 'need_id' => $deletedId])->first()->delete();
+        }
         return redirect()->back()->with('success', 'Chỉnh sửa thành công');
     }
 }
