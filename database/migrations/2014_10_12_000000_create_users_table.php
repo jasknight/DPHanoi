@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->comment('0 is not approved, 1 is approved');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

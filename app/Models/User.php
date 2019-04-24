@@ -7,11 +7,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\UserNeed;
 use Laratrust\Traits\LaratrustUserTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use Notifiable;
+    use SoftDeletes;
 
     const NOT_APPROVED = 0;
     const APPROVED = 1;

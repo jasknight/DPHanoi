@@ -45,6 +45,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'admin']], function (
 
     Route::get('/report', 'Admin\ReportController@all')->name('admin.report.all');
     Route::get('/detail', 'Admin\ReportController@detai')->name('admin.report.detail');
+
+    Route::get('/news', 'Admin\NewsController@index')->name('admin.news.index');
+    Route::get('/news/create', 'Admin\NewsController@create')->name('admin.news.create');
 });
 
 Route::get('/home', function () {
